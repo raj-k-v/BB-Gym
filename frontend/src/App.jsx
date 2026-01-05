@@ -1,16 +1,12 @@
-import ClassStudio from "./components/ClassStudio"
-import Footer from "./components/Footer"
 import Home from "./components/Home"
-import LearnMore from "./components/LearnMore"
-import OurAmenities from "./components/OurAmenities"
-import SuccessStories from "./components/SuccessStories"
+import CursorGlow from "./components/CursorGlow";
 
 function App() {
 
   return (
     <>
-      <Home />
-      
+      <CursorGlow />
+          
     </>
   )
 }
