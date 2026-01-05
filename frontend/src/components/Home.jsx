@@ -3,6 +3,7 @@
 // Navbar at the top of the page
 import Navbar from "./Navbar";
 
+
 // Section components rendered after hero
 import LearnMore from "./LearnMore";
 import OurAmenities from "./OurAmenities";
@@ -35,6 +36,7 @@ export default function Home() {
 
   return (
     <>
+
       {/* ================= NAVBAR ================= */}
       <Navbar />
 
