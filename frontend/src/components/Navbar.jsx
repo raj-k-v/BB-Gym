@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import logo from "../assets/logo.png";
 
 export default function Navbar() {
+  const [open, setOpen] = useState(false);
+
   const links = [
     { name: "Home", path: "/" },
     { name: "Registration", path: "/reservation" },
@@ -11,39 +13,27 @@ export default function Navbar() {
   ];
 
   return (
-    <nav className="fixed top-5 left-0 w-full z-50 px-6">
-      <div className="relative flex items-center justify-center">
+    <nav className="fixed top-4 left-0 w-full z-50 px-6">
+      <div className="relative flex items-center">
 
-        <div className="absolute left-0 flex items-center">
-          <NavLink to="/" className="group">
-            <img
-              src={logo}
-              alt="BB Gym"
-              className="
-                w-15 h-15 invert
-                transition-all duration-500
-                group-hover:rotate-6 group-hover:scale-300
-              "
-            />
-          </NavLink>
-        </div>
+        {/* LOGO (LEFT) */}
+        <NavLink to="/" className="z-50">
+          <img
+            src={logo}
+            alt="BB Gym"
+            className="w-11 h-11 invert"
+          />
+        </NavLink>
 
+        {/* DESKTOP NAV (CENTERED) */}
         <div
           className="
-            flex items-center gap-10
-            px-8 py-3 rounded-xl
-
-            
-            backdrop-blur-2xl
-            border border-white/70
-            border-x-black/30
-            bg-gradient-to-l
-          from-[white]/30
-          via-black/30 
-          to-white/50
-            shadow-lg shadow-white/20
-
-            
+            hidden md:flex items-center gap-12
+            px-10 py-4
+            bg-black
+            border border-white/10
+            shadow-[0_10px_40px_rgba(0,0,0,0.8)]
+            absolute left-1/2 -translate-x-1/2
           "
         >
           {links.map((item) => (
@@ -52,41 +42,68 @@ export default function Navbar() {
               to={item.path}
               className={({ isActive }) =>
                 `
-                  relative text-sm font-medium tracking-wide
-                  transition-all duration-300
-
+                  relative text-xs font-extrabold uppercase tracking-widest
+                  transition-colors duration-300
                   ${
                     isActive
                       ? "text-[#ccfd06]"
                       : "text-white/70 hover:text-[#ccfd06]"
                   }
+
                   after:content-['']
-                  after:absolute after:left-1/2 after:-bottom-2
-                  after:h-[2px] after:w-6
-                  after:-translate-x-1/2
-                  after:rounded-xl
+                  after:absolute after:left-0 after:-bottom-2
+                  after:h-[2px] after:w-full
                   after:bg-[#ccfd06]
                   after:scale-x-0
+                  after:origin-left
                   after:transition-transform after:duration-300
-                  
-
                   hover:after:scale-x-100
                   ${isActive ? "after:scale-x-100" : ""}
                 `
               }
             >
               {item.name}
+            </NavLink>
+          ))}
+        </div>
 
+        {/* HAMBURGER (RIGHT) */}
+        <button
+          onClick={() => setOpen(!open)}
+          className="md:hidden ml-auto flex flex-col gap-1.5 z-50"
+        >
+          <span className="w-6 h-[2px] bg-white"></span>
+          <span className="w-6 h-[2px] bg-white"></span>
+          <span className="w-6 h-[2px] bg-white"></span>
+        </button>
 
-              <span
-                className={`
-                  absolute -top-2 left-1/2 -translate-x-1/2
-                  h-1.5 w-1.5 rounded-full
-                  bg-[#ccfd06]
-                  transition-all duration-300
-                  ${item.path === location.pathname ? "opacity-100" : "opacity-0"}
-                `}
-              />
+        {/* MOBILE MENU */}
+        <div
+          className={`
+            fixed top-0 left-0 w-full h-screen
+            bg-black
+            flex flex-col items-center justify-center gap-10
+            transition-transform duration-300
+            ${open ? "translate-y-0" : "-translate-y-full"}
+          `}
+        >
+          {links.map((item) => (
+            <NavLink
+              key={item.name}
+              to={item.path}
+              onClick={() => setOpen(false)}
+              className={({ isActive }) =>
+                `
+                  text-2xl font-extrabold uppercase tracking-widest
+                  ${
+                    isActive
+                      ? "text-[#ccfd06]"
+                      : "text-white/70 hover:text-[#ccfd06]"
+                  }
+                `
+              }
+            >
+              {item.name}
             </NavLink>
           ))}
         </div>
